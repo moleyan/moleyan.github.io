@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>bog | Hugo Theme Dream</title>
+
+    
+
+
+
+<meta name="author" content="Yue Yang" />
+<meta name="description" content="" />
+
+
+
+<meta name="generator" content="Hugo 0.83.1" />
+
+<link rel="canonical" href="https://moleyan.github.io/post/blog/" />
+
+
+<meta property="og:title" content="bog" />
+<meta property="og:description" content="mall学习教程 简介 mall学习教程，架构、业务、技术要点全方位解析。mall项目（40k&#43;star）是一套电商系统，使用现阶段主流技术实现。涵盖了SpringBoot 2.3.0、MyBatis 3.4.6、Elasticsearch 7.6.2、RabbitMQ 3.7.15、Redis 5.0、MongoDB 4.2.5、Mysql5.7等技术，采用Docker容器化部署。
+项目地址  后台项目：https://github.com/macrozheng/mall 前端项目：https://github.com/macrozheng/mall-admin-web 微服务项目：https://github.com/macrozheng/mall-swarm  更好的阅读体验  文档地址：http://www.macrozheng.com 备用地址：https://macrozheng.github.io/mall-learning  序章  mall架构及功能概览 mall学习所需知识点（推荐资料）  架构篇  手把手教你搭建一个mall在使用的项目骨架
+  mall整合SpringBoot&#43;MyBatis搭建基本骨架 mall整合Swagger-UI实现在线API文档 mall整合Redis实现缓存功能 mall整合SpringSecurity和JWT实现认证和授权（一） mall整合SpringSecurity和JWT实现认证和授权（二） mall整合SpringTask实现定时任务 mall整合Elasticsearch实现商品搜索 mall整合Mongodb实现文档操作 mall整合RabbitMQ实现延迟消息 mall整合OSS实现文件上传  业务篇  全面解析mall中使用的数据库表结构
+  mall数据库表结构概览 商品模块数据库表解析（一） 商品模块数据库表解析（二） 订单模块数据库表解析（一） 订单模块数据库表解析（二） 订单模块数据库表解析（三） 营销模块数据库表解析（一） 营销模块数据库表解析（二） 营销模块数据库表解析（三） 权限管理功能设计与优化 商品SKU功能设计与优化  技术要点篇  mall中一些功能的技术要点解析
+  MyBatis Generator使用过程中踩过的一个坑 SpringBoot应用中使用AOP记录接口访问日志 SpringBoot应用整合ELK实现日志收集 前后端分离项目，如何解决跨域问题 Java 8都出那么久了，Stream API了解下？ 仅需四步，整合SpringSecurity&#43;JWT实现登录认证！ 前后端分离项目，如何优雅实现文件存储！ 前后端分离项目，引入Spring Cloud Gateway遇到的一个问题！ 手把手教你搞定权限管理，结合Spring Security实现接口的动态权限控制！ 手把手教你搞定权限管理，结合Vue实现菜单的动态权限控制！ SpringBoot中处理校验逻辑的两种方式，真的很机智！ 使用Redis&#43;AOP优化权限管理功能，这波操作贼爽！ Elasticsearch项目实战，商品搜索功能设计与实现！ 连RabbitMQ的5种核心消息模式都不懂，也敢说自己会用消息队列！ 给Swagger升级了新版本，没想到居然有这么多坑！ Elasticsearch 升级 7." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://moleyan.github.io/post/blog/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-18T00:08:39&#43;08:00" />
+<meta property="article:modified_time" content="2021-05-18T00:08:39&#43;08:00" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="bog"/>
+<meta name="twitter:description" content="mall学习教程 简介 mall学习教程，架构、业务、技术要点全方位解析。mall项目（40k&#43;star）是一套电商系统，使用现阶段主流技术实现。涵盖了SpringBoot 2.3.0、MyBatis 3.4.6、Elasticsearch 7.6.2、RabbitMQ 3.7.15、Redis 5.0、MongoDB 4.2.5、Mysql5.7等技术，采用Docker容器化部署。
+项目地址  后台项目：https://github.com/macrozheng/mall 前端项目：https://github.com/macrozheng/mall-admin-web 微服务项目：https://github.com/macrozheng/mall-swarm  更好的阅读体验  文档地址：http://www.macrozheng.com 备用地址：https://macrozheng.github.io/mall-learning  序章  mall架构及功能概览 mall学习所需知识点（推荐资料）  架构篇  手把手教你搭建一个mall在使用的项目骨架
+  mall整合SpringBoot&#43;MyBatis搭建基本骨架 mall整合Swagger-UI实现在线API文档 mall整合Redis实现缓存功能 mall整合SpringSecurity和JWT实现认证和授权（一） mall整合SpringSecurity和JWT实现认证和授权（二） mall整合SpringTask实现定时任务 mall整合Elasticsearch实现商品搜索 mall整合Mongodb实现文档操作 mall整合RabbitMQ实现延迟消息 mall整合OSS实现文件上传  业务篇  全面解析mall中使用的数据库表结构
+  mall数据库表结构概览 商品模块数据库表解析（一） 商品模块数据库表解析（二） 订单模块数据库表解析（一） 订单模块数据库表解析（二） 订单模块数据库表解析（三） 营销模块数据库表解析（一） 营销模块数据库表解析（二） 营销模块数据库表解析（三） 权限管理功能设计与优化 商品SKU功能设计与优化  技术要点篇  mall中一些功能的技术要点解析
+  MyBatis Generator使用过程中踩过的一个坑 SpringBoot应用中使用AOP记录接口访问日志 SpringBoot应用整合ELK实现日志收集 前后端分离项目，如何解决跨域问题 Java 8都出那么久了，Stream API了解下？ 仅需四步，整合SpringSecurity&#43;JWT实现登录认证！ 前后端分离项目，如何优雅实现文件存储！ 前后端分离项目，引入Spring Cloud Gateway遇到的一个问题！ 手把手教你搞定权限管理，结合Spring Security实现接口的动态权限控制！ 手把手教你搞定权限管理，结合Vue实现菜单的动态权限控制！ SpringBoot中处理校验逻辑的两种方式，真的很机智！ 使用Redis&#43;AOP优化权限管理功能，这波操作贼爽！ Elasticsearch项目实战，商品搜索功能设计与实现！ 连RabbitMQ的5种核心消息模式都不懂，也敢说自己会用消息队列！ 给Swagger升级了新版本，没想到居然有这么多坑！ Elasticsearch 升级 7."/>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<link rel="stylesheet" href="/css/icomoon.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@1.13.1/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css">
+<link rel="stylesheet" href="/css/site.css" />
+
+<style>
+  .ui.header a:not(.ui.button):hover {
+    text-decoration: underline;
+  }
+
+  
+  a:not(.ui.button) {
+    color: seagreen !important;
+  }
+  
+
+  
+
+  
+  body.default {
+    
+    background-color: #f7f7f7;
+    
+
+    
+  }
+  
+
+  
+</style>
+
+
+    
+
+
+
+
+
+
+
+    
+  </head>
+
+  <body class="default">
+    
+<nav class="ui secondary menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="Flip it!"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="Home" onclick="window.location.href = 'https:\/\/moleyan.github.io\/'"></i>
+  </div>
+  
+  
+</nav>
+
+    <div class="flip-container">
+      <div class="flipper">
+        <section class="front">
+          <div class="dream-max-width">
+            
+<div class="ui relaxed centered grid dream-grid dream-grid-single">
+  
+  
+  
+  
+
+  
+  <aside class="sixteen wide mobile sixteen wide tablet three wide computer column dream-single-aside">
+  
+    
+    <div class="ui segment toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#项目地址">项目地址</a></li>
+    <li><a href="#更好的阅读体验">更好的阅读体验</a></li>
+    <li><a href="#序章">序章</a></li>
+    <li><a href="#架构篇">架构篇</a></li>
+    <li><a href="#业务篇">业务篇</a></li>
+    <li><a href="#技术要点篇">技术要点篇</a></li>
+    <li><a href="#部署篇">部署篇</a></li>
+    <li><a href="#进阶篇">进阶篇</a></li>
+    <li><a href="#参考篇">参考篇</a></li>
+    <li><a href="#工具篇">工具篇</a></li>
+    <li><a href="#公众号">公众号</a></li>
+  </ul>
+</nav>
+    </div>
+    
+
+    
+  
+  </aside>
+  
+  <div class="sixteen wide mobile sixteen wide tablet ten wide computer column markdown-body dream-single" id="dream-save-post-as-img">
+    <section class="ui top attached segment">
+      <header>
+        <h1 class="ui large header">bog<span class="sub header">
+            <span class="left">
+              @
+              
+                Yue Yang
+              
+
+              | 
+                  
+                    Tuesday, May 18, 2021
+                  
+                
+
+              | 2 minutes read
+
+              
+              | Update at
+                
+                  
+                    Tuesday, May 18, 2021
+                  
+                
+              
+            </span>
+
+            
+            <span class="dream-share">
+  <a href="#" class="save-as-image" title="Save as image" onclick="savePostAsImg()">
+    <i class="save icon"></i>
+  </a>
+  <a href="https://twitter.com/intent/tweet?text=bog&url=https%3a%2f%2fmoleyan.github.io%2fpost%2fblog%2f" title="Twitter">
+    <i class="twitter icon"></i>
+  </a>
+  <a href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmoleyan.github.io%2fpost%2fblog%2f" title="Facebook">
+    <i class="facebook icon"></i>
+  </a>
+</span>
+
+            
+          </span>
+        </h1>
+      </header>
+
+      <article class="main">
+        
+
+        <h1 id="mall学习教程">mall学习教程</h1>
+<!-- raw HTML omitted -->
+<h2 id="简介">简介</h2>
+<p>mall学习教程，架构、业务、技术要点全方位解析。mall项目（40k+star）是一套电商系统，使用现阶段主流技术实现。涵盖了SpringBoot 2.3.0、MyBatis 3.4.6、Elasticsearch 7.6.2、RabbitMQ 3.7.15、Redis 5.0、MongoDB 4.2.5、Mysql5.7等技术，采用Docker容器化部署。</p>
+<h2 id="项目地址">项目地址</h2>
+<ul>
+<li>后台项目：<a href="https://github.com/macrozheng/mall">https://github.com/macrozheng/mall</a></li>
+<li>前端项目：<a href="https://github.com/macrozheng/mall-admin-web">https://github.com/macrozheng/mall-admin-web</a></li>
+<li>微服务项目：<a href="https://github.com/macrozheng/mall-swarm">https://github.com/macrozheng/mall-swarm</a></li>
+</ul>
+<h2 id="更好的阅读体验">更好的阅读体验</h2>
+<ul>
+<li>文档地址：<a href="http://www.macrozheng.com">http://www.macrozheng.com</a></li>
+<li>备用地址：<a href="https://macrozheng.github.io/mall-learning">https://macrozheng.github.io/mall-learning</a></li>
+</ul>
+<h2 id="序章">序章</h2>
+<ul>
+<li><a href="https://juejin.im/post/5cf7c305e51d4510b71da5c5">mall架构及功能概览</a></li>
+<li><a href="https://juejin.im/post/5cf7c3aef265da1ba84a7fdc">mall学习所需知识点（推荐资料）</a></li>
+</ul>
+<h2 id="架构篇">架构篇</h2>
+<blockquote>
+<p>手把手教你搭建一个mall在使用的项目骨架</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5cf7c4a7e51d4577790c1c50">mall整合SpringBoot+MyBatis搭建基本骨架</a></li>
+<li><a href="https://juejin.im/post/5cf9035cf265da1bb47d54f8">mall整合Swagger-UI实现在线API文档</a></li>
+<li><a href="https://juejin.im/post/5cf90e9ee51d454f6f16eba0">mall整合Redis实现缓存功能</a></li>
+<li><a href="https://juejin.im/post/5cf90fa5e51d455d6d5357d3">mall整合SpringSecurity和JWT实现认证和授权（一）</a></li>
+<li><a href="https://juejin.im/post/5cfa0933f265da1b8f1ab2da">mall整合SpringSecurity和JWT实现认证和授权（二）</a></li>
+<li><a href="https://juejin.im/post/5cfa0ea16fb9a07eaf2b8261">mall整合SpringTask实现定时任务</a></li>
+<li><a href="https://juejin.im/post/5cfba3e9f265da1b614fea60">mall整合Elasticsearch实现商品搜索</a></li>
+<li><a href="https://juejin.im/post/5cfba5b0f265da1bcc1933fe">mall整合Mongodb实现文档操作</a></li>
+<li><a href="https://juejin.im/post/5cff98986fb9a07ed36ea139">mall整合RabbitMQ实现延迟消息</a></li>
+<li><a href="https://juejin.im/post/5cff9944e51d4577555508a9">mall整合OSS实现文件上传</a></li>
+</ul>
+<h2 id="业务篇">业务篇</h2>
+<blockquote>
+<p>全面解析mall中使用的数据库表结构</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5d34684c6fb9a07ef562724b">mall数据库表结构概览</a></li>
+<li><a href="https://juejin.im/post/5d385a7e518825680e4577ee">商品模块数据库表解析（一）</a></li>
+<li><a href="https://juejin.im/post/5d39ba2cf265da1bc23fbd26">商品模块数据库表解析（二）</a></li>
+<li><a href="https://juejin.im/post/5d4196fef265da03bd04fa31">订单模块数据库表解析（一）</a></li>
+<li><a href="https://juejin.im/post/5d46db2a5188255d1e013ca0">订单模块数据库表解析（二）</a></li>
+<li><a href="https://juejin.im/post/5d497f92e51d4561e0516a9d">订单模块数据库表解析（三）</a></li>
+<li><a href="https://juejin.im/post/5d5012856fb9a06ad45135a6">营销模块数据库表解析（一）</a></li>
+<li><a href="https://juejin.im/post/5d555c7ae51d453b386a6302">营销模块数据库表解析（二）</a></li>
+<li><a href="https://juejin.im/post/5d5bf6676fb9a06b0703c0c5">营销模块数据库表解析（三）</a></li>
+<li><a href="https://juejin.im/post/5e4bd8416fb9a07c9f3fd5dd">权限管理功能设计与优化</a></li>
+<li><a href="https://juejin.im/post/5e5cfaa9f265da574b7918f6">商品SKU功能设计与优化</a></li>
+</ul>
+<h2 id="技术要点篇">技术要点篇</h2>
+<blockquote>
+<p>mall中一些功能的技术要点解析</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5d107037e51d45599e019de8">MyBatis Generator使用过程中踩过的一个坑</a></li>
+<li><a href="https://juejin.im/post/5d2001bb6fb9a07edf276593">SpringBoot应用中使用AOP记录接口访问日志</a></li>
+<li><a href="https://juejin.im/post/5d2738a2f265da1bac404299">SpringBoot应用整合ELK实现日志收集</a></li>
+<li><a href="https://juejin.im/post/5d4c162351882560b9545358">前后端分离项目，如何解决跨域问题</a></li>
+<li><a href="https://juejin.im/post/5d6d2016e51d453c135c5b25">Java 8都出那么久了，Stream API了解下？</a></li>
+<li><a href="https://juejin.im/post/5df0e79bf265da33dd2f52af">仅需四步，整合SpringSecurity+JWT实现登录认证！</a></li>
+<li><a href="https://juejin.im/post/5e0ca2266fb9a0484a45969c">前后端分离项目，如何优雅实现文件存储！</a></li>
+<li><a href="https://juejin.im/post/5e13248e5188253ab849d125">前后端分离项目，引入Spring Cloud Gateway遇到的一个问题！</a></li>
+<li><a href="https://juejin.im/post/5e5519fd6fb9a07cc7473fcf">手把手教你搞定权限管理，结合Spring Security实现接口的动态权限控制！</a></li>
+<li><a href="https://juejin.im/post/5e57c8236fb9a07caf445ddc">手把手教你搞定权限管理，结合Vue实现菜单的动态权限控制！</a></li>
+<li><a href="https://juejin.im/post/5e6636da6fb9a07cb24aaf00">SpringBoot中处理校验逻辑的两种方式，真的很机智！</a></li>
+<li><a href="https://juejin.im/post/5e78b96b6fb9a07cb83e4a10">使用Redis+AOP优化权限管理功能，这波操作贼爽！</a></li>
+<li><a href="https://juejin.im/post/5e94587f51882573be11cb83">Elasticsearch项目实战，商品搜索功能设计与实现！</a></li>
+<li><a href="https://juejin.im/post/6844904184920162317">连RabbitMQ的5种核心消息模式都不懂，也敢说自己会用消息队列！</a></li>
+<li><a href="https://juejin.im/post/6850037281392099341">给Swagger升级了新版本，没想到居然有这么多坑！</a></li>
+<li><a href="https://juejin.im/post/6856555431570735117">Elasticsearch 升级 7.x 版本后，我感觉掉坑里了！</a></li>
+</ul>
+<h2 id="部署篇">部署篇</h2>
+<blockquote>
+<p>mall开发及生产环境的搭建</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5d1362de51882551fe065b61">mall在Windows环境下的部署</a></li>
+<li><a href="https://juejin.im/post/5d1802ab6fb9a07f0a2df5ae">mall在Linux环境下的部署（基于Docker容器）</a></li>
+<li><a href="https://juejin.im/post/5d1c98d66fb9a07ebf4b8ad5">mall在Linux环境下的部署（基于Docker Compose）</a></li>
+<li><a href="https://juejin.im/post/5e15d7b16fb9a0484f5c3931">mall在Linux环境下的自动化部署（基于Jenkins）</a></li>
+<li><a href="https://juejin.im/post/5d2c7c6b518825076377d7b9">mall前端项目的安装与部署</a></li>
+<li><a href="https://juejin.im/post/5de3c1a35188256e855b6e54">mall-swarm在Windows环境下的部署</a></li>
+<li><a href="https://juejin.im/post/5de65bffe51d4557f71a5ec1">mall-swarm在Linux环境下的部署（基于Docker容器）</a></li>
+<li><a href="https://juejin.im/post/5dfa250e51882579dc6f7c90">微服务架构下的自动化部署，使用Jenkins来实现！</a></li>
+<li><a href="https://juejin.im/post/6844904163424337928">我常用的自动化部署技巧，贼好用，推荐给大家！</a></li>
+</ul>
+<h2 id="进阶篇">进阶篇</h2>
+<blockquote>
+<p>一套涵盖大部分核心组件使用的Spring Cloud教程，包括Spring Cloud Alibaba及分布式事务Seata，基于Spring Cloud Greenwich及SpringBoot 2.1.7</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5d764f05e51d4561fb04bfd7">Spring Cloud 整体架构概览</a></li>
+<li><a href="https://juejin.im/post/5d78cd53f265da03d55e8351">Spring Cloud Eureka：服务注册与发现</a></li>
+<li><a href="https://juejin.im/post/5d7f9006f265da03951a260c">Spring Cloud Ribbon：负载均衡的服务调用</a></li>
+<li><a href="https://juejin.im/post/5d822d27e51d45621479ad92">Spring Cloud Hystrix：服务容错保护</a></li>
+<li><a href="https://juejin.im/post/5d88cb58f265da03e4679eff">Hystrix Dashboard：断路器执行监控</a></li>
+<li><a href="https://juejin.im/post/5d9c85c3e51d45782c23fab6">Spring Cloud OpenFeign：基于Ribbon和Hystrix的声明式服务调用</a></li>
+<li><a href="https://juejin.im/post/5d9f2dea6fb9a04e3e724067">Spring Cloud Zuul：API网关服务</a></li>
+<li><a href="https://juejin.im/post/5da4709af265da5baa5b06ac">Spring Cloud Config：外部集中化配置管理</a></li>
+<li><a href="https://juejin.im/post/5da70d1351882509615bea34">Spring Cloud Bus：消息总线</a></li>
+<li><a href="https://juejin.im/post/5dadb4d36fb9a04e02409a7d">Spring Cloud Sleuth：分布式请求链路跟踪</a></li>
+<li><a href="https://juejin.im/post/5db05582f265da4d4c20180f">Spring Cloud Consul：服务治理与配置中心</a></li>
+<li><a href="https://juejin.im/post/5db6eed6518825644076d0b6">Spring Cloud Gateway：新一代API网关服务</a></li>
+<li><a href="https://juejin.im/post/5db98a2d518825649c730f81">Spring Boot Admin：微服务应用监控</a></li>
+<li><a href="https://juejin.im/post/5dc013bae51d456e817cec30">Spring Cloud Security：Oauth2使用入门</a></li>
+<li><a href="https://juejin.im/post/5dc2bec6f265da4d4f65bebe">Spring Cloud Security：Oauth2结合JWT使用</a></li>
+<li><a href="https://juejin.im/post/5dc95a675188256e040db43f">Spring Cloud Security：Oauth2实现单点登录</a></li>
+<li><a href="https://juejin.im/post/5dcbf7bc5188250d1f5a78ea">Spring Cloud Alibaba：Nacos 作为注册中心和配置中心使用</a></li>
+<li><a href="https://juejin.im/post/5dd29bece51d4561e80f9053">Spring Cloud Alibaba：Sentinel实现熔断与限流</a></li>
+<li><a href="https://juejin.im/post/5dd53a9d5188255d35425a08">使用Seata彻底解决Spring Cloud中的分布式事务问题</a></li>
+<li><a href="https://juejin.im/post/6850037263707930631">微服务权限终极解决方案，Spring Cloud Gateway + Oauth2 实现统一认证和鉴权！</a></li>
+<li><a href="https://juejin.im/post/6854573219916201997">微服务聚合Swagger文档，这波操作是真的香！</a></li>
+<li><a href="https://juejin.im/post/6857296054392471559">我扒了半天源码，终于找到了Oauth2自定义处理结果的最佳方案！</a></li>
+</ul>
+<h2 id="参考篇">参考篇</h2>
+<blockquote>
+<p>mall相关技术的使用教程</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5d00fd40f265da1bb67a11b3">开发者必备Mysql命令</a></li>
+<li><a href="https://juejin.im/post/5d0253845188255e1305c741">开发者必备Linux命令</a></li>
+<li><a href="https://juejin.im/post/5d0253fe6fb9a07edb39420d">Linux防火墙Firewall和Iptables的使用</a></li>
+<li><a href="https://juejin.im/post/5d0781f56fb9a07f014ef6be">开发者必备Docker命令</a></li>
+<li><a href="https://juejin.im/post/5d08e3d26fb9a07ed8424488">使用Maven插件构建Docker镜像</a></li>
+<li><a href="https://juejin.im/post/5d0a25b76fb9a07ed524a438">使用DockerFile为SpringBoot应用构建Docker镜像</a></li>
+<li><a href="https://juejin.im/user/5cf7c1d7f265da1bc07e28b7">使用Docker Compose部署SpringBoot应用</a></li>
+<li><a href="https://juejin.im/post/5ddfd1665188256ec024cb7c">虚拟机安装及使用Linux，看这一篇就够了！</a></li>
+<li><a href="https://juejin.im/post/5dee499151882512444014eb">Nginx的这些妙用，你肯定有不知道的！</a></li>
+<li><a href="https://juejin.im/post/5df780d3e51d4557ff140b30">使用Jenkins一键打包部署SpringBoot应用，就是这么6！</a></li>
+<li><a href="https://juejin.im/post/5e0360e951882512400ae872">使用Jenkins一键打包部署前端应用，就是这么6！</a></li>
+<li><a href="https://juejin.im/post/5e09f8fbe51d4575a46f05e5">Github标星19K+Star，10分钟自建对象存储服务！</a></li>
+<li><a href="https://juejin.im/post/5e1daba46fb9a02fb75d5e92">MySql主从复制，从原理到实践！</a></li>
+<li><a href="https://juejin.im/post/5e22b37ee51d454d523be24d">你还在代码里做读写分离么，试试这个中间件吧！</a></li>
+<li><a href="https://juejin.im/post/5e6f703fe51d45270531a214">Spring Data Redis 最佳实践！</a></li>
+<li><a href="https://juejin.im/post/5e81fd1ff265da47e84e5e2c">Docker环境下秒建Redis集群，连SpringBoot也整上了！</a></li>
+<li><a href="https://juejin.im/post/5e8c7d65518825736512d097">Elasticsearch快速入门，掌握这些刚刚好！</a></li>
+<li><a href="https://juejin.im/post/5eb4043cf265da7bf5368276">MongoDB快速入门，掌握这些刚刚好！</a></li>
+<li><a href="https://juejin.im/post/5ecd12076fb9a0479958376b">Github标星34K+Star，这款开源项目助你秒建Git服务！</a></li>
+<li><a href="https://juejin.im/post/6844904184920162317">连RabbitMQ的5种核心消息模式都不懂，也敢说自己会用消息队列！</a></li>
+<li><a href="https://juejin.im/post/6844904196672585741">你居然还去服务器上捞日志，搭个日志收集系统难道不香么！</a></li>
+<li><a href="https://juejin.im/post/6844904205363183630">性能优越的轻量级日志收集工具，微软、亚马逊都在用！</a></li>
+<li><a href="https://juejin.im/post/6847902224325345288">听说你的JWT库用起来特别扭，推荐一款贼好用的！</a></li>
+<li><a href="https://juejin.im/post/6854573214358732814">给Swagger换了个新皮肤，瞬间高大上了！</a></li>
+<li><a href="https://juejin.im/post/6861749836249563143">Docker服务开放了这个端口，服务器分分钟变肉机！</a></li>
+<li><a href="https://juejin.im/post/6865462161486184456">居然有人想白嫖我的日志，赶紧开启安全保护压压惊！</a></li>
+<li><a href="https://juejin.im/post/6866946088134410248">面对成百上千台服务器产生的日志，试试这款轻量级日志搬运神器！</a></li>
+<li><a href="https://juejin.im/post/6868060821927723021">还在手动部署SpringBoot应用？试试这个自动化插件！</a></li>
+<li><a href="https://juejin.im/post/6869914176941359118">不要再重复造轮子了，这款开源工具类库贼好使！</a></li>
+<li><a href="https://juejin.im/post/6870659845029101576">还在手写CRUD代码？这款开源框架助你解放双手！</a></li>
+<li><a href="https://juejin.im/post/6875854161561255944">还在手写任务调度代码？试试这款可视化分布式调度框架！</a></li>
+<li><a href="https://juejin.im/post/6882530961406296077">微服务应用性能如何？APM监控工具来告诉你！</a></li>
+<li><a href="https://juejin.im/post/6883273274248134663">RabbitMQ实现即时通讯居然如此简单！连后端代码都省得写了？</a></li>
+<li><a href="https://juejin.im/post/6885869364180942862">SpringBoot官方支持任务调度框架，轻量级用起来也挺香！</a></li>
+<li><a href="https://juejin.im/post/6888467506588024845">如何让网站和API都支持HTTPS？在Nginx上做文章是个好选择！</a></li>
+<li><a href="https://juejin.im/post/6890692970018766856">还在手动整合Swagger？Swagger官方Starter是真的香！</a></li>
+<li><a href="https://juejin.im/post/6891435372824395784">MySQL如何实时同步数据到ES？试试这款阿里开源的神器！</a></li>
+</ul>
+<h2 id="工具篇">工具篇</h2>
+<blockquote>
+<p>一些常用开发工具的使用</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/post/5d0458085188256aa76bc678">IDEA常用设置及推荐插件</a></li>
+<li><a href="https://juejin.im/post/5d00fc865188255fc6384126">Navicat实用功能：数据备份与结构同步</a></li>
+<li><a href="https://juejin.im/post/5d5a9032e51d4561db5e3a4a">Postman：API接口调试利器</a></li>
+<li><a href="https://juejin.im/post/5d63d600e51d453c135c5af3">10分钟搭建自己的Git仓库</a></li>
+<li><a href="https://juejin.im/post/5d667fc6e51d453b5d4d8da5">IDEA中的Git操作，看这一篇就够了！</a></li>
+<li><a href="https://juejin.im/post/5ddfd1665188256ec024cb7c">虚拟机安装及使用Linux，看这一篇就够了！</a></li>
+<li><a href="https://juejin.im/post/5e4200885188254944669a79">推荐一个项目管理工具，落地基于Scrum的敏捷开发！</a></li>
+<li><a href="https://juejin.im/post/5d8b69366fb9a04e3348b06c">IDEA中创建和启动SpringBoot应用的正确姿势</a></li>
+<li><a href="https://juejin.im/post/5e5f99c251882549281bfb09">盘点下我用的顺手的那些工具！</a></li>
+<li><a href="https://juejin.im/post/5ea6d2725188256da20e60ee">我用起来顺手的数据库设计工具，这次推荐给大家！</a></li>
+<li><a href="https://juejin.im/post/5eba9a5bf265da7bca50010c">我常用的IDEA插件大公开，个个是精品！</a></li>
+<li><a href="https://juejin.im/post/5ed4f2446fb9a047d5645a2b">IDEA同款数据库管理工具，提示太全了，用起来贼香！</a></li>
+<li><a href="https://juejin.im/post/6844904200640397325">写了100多篇原创文章，我常用的在线工具网站推荐给大家！</a></li>
+<li><a href="https://juejin.im/post/6846687603471679496">线上项目出BUG没法调试？推荐这款阿里开源的诊断神器！</a></li>
+<li><a href="https://juejin.im/post/6859166000932519944">被我用烂的DEBUG调试技巧，专治各种搜索不到的问题！</a></li>
+<li><a href="https://juejin.im/post/6875109882006077448">Github标星 8K+，免费又好用的Redis客户端工具！</a></li>
+</ul>
+<h2 id="公众号">公众号</h2>
+<p>mall项目全套学习教程连载中，关注公众号「<strong>macrozheng</strong>」第一时间获取。</p>
+<p><img src="http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/banner/qrcode_for_macrozheng_258.jpg" alt="公众号图片"></p>
+
+      </article>
+    </section>
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+
+            <footer class="ui basic center aligned segment" style="background-color: transparent;">
+              
+              <p>© 2016 - 2021 Hugo Theme Dream</p>
+              
+
+              <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</p>
+
+              
+            </footer>
+          </div>
+        </section>
+        <section class="back">
+          <div class="dream-max-width">
+            <header class="ui basic very padded segment dream-header">
+  
+  <div class="ui small circular image">
+    <img src="/img/avatar.jpeg" alt="avatar" />
+  </div>
+  
+
+  <div class="content">
+    <h1 class="ui medium header">Hugo Theme Dream<span class="sub header">Motto</span>
+    </h1>
+
+    <article class="ui horizontal list">
+      
+      <a class="item" href="/categories">
+        <i class="th list icon" title="All Categories"></i>
+      </a>
+      <a class="item" href="/tags">
+        <i class="tags icon" title="All Tags"></i>
+      </a>
+    </article>
+
+    
+  </div>
+</header>
+
+
+<div class="ui relaxed grid dream-grid dream-back">
+  
+  
+  
+
+  <div class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    <article class="ui segment">
+      <div class="ui medium header">Social Links</div>
+      <nav class="ui secondary menu dream-menu dream-socials">
+  
+
+  
+  <div class="item">
+    <a href="mailto:g1enyy0ung@gmail.com">
+      <i class="large mail icon" title="Email"></i>
+    </a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</nav>
+
+    </article>
+  </div>
+
+  <div class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    
+  </div>
+
+  
+  
+  
+</div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+    
+
+    <script>
+  window.defaultDark =  null 
+  window.backgroundDark =  null 
+  window.backgroundImageDark =  null 
+  window.darkNav =  null 
+  window.maxTags =  null 
+  window.hasTwitterEmbed =  null 
+
+  if (window.hasTwitterEmbed) {
+    
+    window.twttr = (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {}
+      if (d.getElementById(id)) return t
+      js = d.createElement(s)
+      js.id = id
+      js.src = 'https://platform.twitter.com/widgets.js'
+      fjs.parentNode.insertBefore(js, fjs)
+
+      t._e = []
+      t.ready = function (f) {
+        t._e.push(f)
+      }
+
+      return t
+    })(document, 'script', 'twitter-wjs')
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@1.13.1/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/js/header.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/theme.js"></script>
+
+    
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js"></script>
+<script src="/js/post.js" defer></script>
+
+
+    
+
+    
+  </body>
+</html>
